@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SOURCE="tnnee.svg"
+GENERATED="tnnee-plain.svg"
+
+if [[ ! -f "$SOURCE" ]]; then
+  echo "❌ pre-push: fichier source introuvable: $SOURCE" >&2
+  exit 1
+fi
+if [[ ! -f "$GENERATED" ]]; then
+  echo "❌ pre-push: fichier généré introuvable: $GENERATED" >&2
+  echo "   → Génère-le avant de push (ex: npm run clean:svg)" >&2
+  exit 1
+fi
+
+# Compare les dates de modif: si SOURCE est plus récent que GENERATED => OK
+if [[ "$SOURCE" -nt "$GENERATED" ]]; then
+  echo "✅ pre-push: OK ($SOURCE est plus récent que $GENERATED)"
+  exit 0
+fi
+
+echo "❌ pre-push: $GENERATED est plus récent (ou égal) à $SOURCE" >&2
+echo "   → Tu as probablement oublié de régénérer $GENERATED depuis $SOURCE" >&2
+echo "   → Lance: npm run clean:svg" >&2
+exit 1

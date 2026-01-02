@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "tnn.ee",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "@astrojs/svelte": "^7.2.4",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.6",
+    "svelte": "^5.46.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^27.0.0",
+    "chokidar": "^5.0.0",
+    "jsdom": "^27.4.0",
+    "sass": "^1.97.1"
   }
 }
