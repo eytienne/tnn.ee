@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import tnnee from '../../tnnee-plain.svg?raw'
+	import tnnee from '@@/tnnee-plain.svg?raw'
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
@@ -16,47 +16,24 @@
 	}
 </script>
 
-<div id="container" class="h-full relative">
-	<div id="background" class="bg-gray-100 absolute top-0 left-0 w-full h-full -z-1 blur-[100px]"></div>
-	<main class="h-full flex flex-col justify-center items-center gap-8 p-4">
-		<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
-			{@html tnnee}
-			{#if false}
-			<span id="target" style:--svgh={svgh + "px"} class="flex justify-center">
-				Étienne
-			</span>
-			{/if}
-		</div>
-		<!-- <p>Salut ! Ici Etienne, passionné de dev !</p> -->
-	</main>
-</div>
+<header class="h-55/100 flex justify-center items-end">
+	<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
+		{@html tnnee}
+		{#if false}
+		<span id="target" style:--svgh={svgh + "px"} class="flex justify-center">
+			Étienne
+		</span>
+		{/if}
+	</div>
+</header>
 
 <style lang="scss">
-	#container {
+	header {
 		@font-face {
 			font-family: ArchivoBlack;
 			src: url('ArchivoBlack-Regular.ttf');
 		}
 		font-family: Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-
-		.gradient {
-			background-image: linear-gradient(
-				70deg,
-				hsl(60deg 14% 30%) 0%,
-				hsl(60deg 18% 36%) 8%,
-				hsl(60deg 21% 41%) 15%,
-				hsl(60deg 24% 47%) 23%,
-				hsl(60deg 29% 53%) 29%,
-				hsl(60deg 39% 59%) 36%,
-				hsl(60deg 54% 65%) 43%,
-				hsl(59deg 55% 71%) 49%,
-				hsl(58deg 57% 77%) 55%,
-				hsl(57deg 58% 83%) 61%,
-				hsl(56deg 60% 89%) 68%,
-				hsl(55deg 61% 94%) 76%,
-				hsl(0deg 0% 100%) 99%
-			);
-		}
 
 		#title {
 			font-family: ArchivoBlack;
