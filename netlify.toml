@@ -2,3 +2,12 @@
 [build]
   command = "npm run build"
   publish = "build"
+
+[[redirects]]
+  from = "/fr/*" # keep in sync with defaultLocale in i18n.ts
+  to = "/:splat"
+  status = 301
+  force = true
+
+[dev]
+  targetPort = 4321
