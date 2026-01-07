@@ -8,3 +8,9 @@ export function normalizeLocale(maybe: string | undefined): Locale {
 		? (maybe as Locale)
 		: defaultLocale;
 }
+
+export function switchLocale(currentPath: string, target: Locale) {
+	const stripped = currentPath.replace(/^\/(fr|en)(?=\/|$)/, '');
+
+	return ((target === defaultLocale ? '' : `/${target}`) + stripped) || '/';
+}
