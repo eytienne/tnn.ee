@@ -12,9 +12,21 @@
 [dev]
   targetPort = 4321
 
-[[headers]]
-  for = "/*"
+[[plugins]]
+  package = "netlify-plugin-csp-generator"
 
-  [headers.values]
-    Content-Security-Policy = "script-src 'self'; object-src 'none'; base-uri 'self'"
+  [plugins.inputs]
+  buildDir = "build"
+  disableGeneratedPolicies = ["styleSrc"]
 
+  [plugins.inputs.policies]
+    defaultSrc = "'self'"
+    scriptSrc = "'self' 'unsafe-inline'"
+    scriptSrcElem = "'self' 'unsafe-inline'"
+    styleSrc = "'self' 'unsafe-inline'"
+    imgSrc = "'self' data: blob:"
+    fontSrc = "'self'"
+    connectSrc = "'self'"
+    objectSrc = "'none'"
+    baseUri = "'self'"
+    frame-ancestors = "'none'"
