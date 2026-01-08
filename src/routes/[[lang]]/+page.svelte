@@ -16,7 +16,7 @@
 	}
 </script>
 
-<header class="h-55/100 flex justify-center items-end">
+<header class="h-50/100 flex justify-center items-end">
 	<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
 		{@html tnnee}
 		{#if false}
@@ -52,6 +52,8 @@
 					--duration: .3s;
 
 					> * {
+						fill: var(--color-foreground) !important;
+						stroke: var(--color-foreground) !important;
 						transition-property: all;
 						transition-duration: var(--duration);
 					}
