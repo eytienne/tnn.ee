@@ -1,5 +1,16 @@
 {
 	"files.associations": {
 		"*.css": "tailwindcss"
-	}
+	},
+	"emeraldwalk.runonsave": {
+		"commands": [
+			{
+				"match": "src/lib/assets/tnn.md",
+				"cmd": "sed -i '/^[[:space:]]*$/d' \"${file}\""
+			}
+		]
+	},
+	"tailwindCSS.experimental.classRegex": [
+		["cn`([^`]*)`"]
+	]
 }

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import tnnee from '@@/tnnee-plain.svg?raw'
+	import { m } from '@/lib/paraglide/messages';
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
@@ -16,7 +17,7 @@
 	}
 </script>
 
-<header class="h-50/100 flex justify-center items-end">
+<header class="h-55/100 flex justify-center items-end">
 	<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
 		{@html tnnee}
 		{#if false}
@@ -26,6 +27,9 @@
 		{/if}
 	</div>
 </header>
+<main class="p-3 mt-16 text-2xl flex flex-col items-center">
+	<p>{m.about__title()}</p>
+</main>
 
 <style lang="scss">
 	header {

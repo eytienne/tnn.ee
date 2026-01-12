@@ -11,3 +11,6 @@ insert_final_newline = true
 [*.toml]
 indent_style = space
 indent_size = 2
+
+[tnn.md]
+insert_final_newline = false
