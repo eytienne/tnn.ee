@@ -4,6 +4,17 @@ import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, type PluginOption } from 'vite';
 import { build, context, type BuildOptions } from 'esbuild';
+import Icons from 'unplugin-icons/vite'
+import { compareColors, stringToColor } from '@iconify/utils/lib/colors';
+import {
+	cleanupSVG,
+	parseColors,
+	runSVGO,
+	deOptimisePaths,
+	importDirectorySync,
+} from '@iconify/tools';
+
+const SVG_ICONS = 'svg-icons';
 
 export default defineConfig({
 	server: { port: 4321 },
@@ -17,7 +28,59 @@ export default defineConfig({
 			project: './project.inlang',
 			outdir: './src/lib/paraglide',
 			strategy: ["url", "baseLocale"],
-		})
+		}),
+		Icons({
+			compiler: 'svelte',
+			customCollections: {
+				[SVG_ICONS]: async () => {
+					const iconSet = importDirectorySync(
+						`./src/lib/assets/${SVG_ICONS}`,
+						{
+							prefix: SVG_ICONS,
+						}
+					);
+
+					iconSet.forEachSync((name) => {
+						const svg = iconSet.toSVG(name);
+						if (!svg) {
+							return;
+						}
+
+						cleanupSVG(svg);
+
+						const blackColor = stringToColor('black')!;
+
+						parseColors(svg, {
+							defaultColor: 'currentColor',
+							callback: (attr, colorStr, color) => {
+								if (color && compareColors(color, blackColor)) {
+									return 'currentColor';
+								}
+
+								switch (color?.type) {
+									case 'none':
+									case 'current':
+										return color;
+								}
+
+								throw new Error(
+									`Unexpected color "${colorStr}" in attribute ${attr}`
+								);
+							},
+						});
+
+						runSVGO(svg);
+
+						// Update paths for compatibility with old software
+						deOptimisePaths(svg);
+
+						iconSet.fromSVG(name, svg);
+					});
+
+					return iconSet.export();
+				},
+			},
+		}),
 	]
 });
 

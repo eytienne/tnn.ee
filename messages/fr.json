@@ -1,5 +1,15 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"about__title": "Salut, ici Étienne — un développeur logiciel et amateur de KISS.",
-	"header__dark_mode": "Dark mode"
+	"3distinct_short_description": "Mon configurateur 3D, retro-engineering de Nike By You.",
+	"3distinct_title": "3Distinct",
+	"about_skills": "fr/about_skills.md",
+	"about_title": "Salut, ici Étienne — un développeur logiciel et amateur de KISS.",
+	"contact_cta_email": "Envoyez un email",
+	"contact_cta_whatsapp": "Contactez-moi sur WhatsApp",
+	"contact_email_subject": "Requête pro",
+	"contact_subtitle": "N'hésitez pas à me contacter si vous cherchez un développeur ou souhaitez échanger.",
+	"contact_title": "Construisons quelque chose ensemble !",
+	"header__dark_mode": "Dark mode",
+	"projects_title": "J'ai travaillé sur...",
+	"resume": "cv_etienne_arabeyre.pdf"
 }

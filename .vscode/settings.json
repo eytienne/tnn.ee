@@ -2,6 +2,10 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
+	"[json]": {
+		"editor.wordWrap": "bounded",
+		"editor.wordWrapColumn": 90,
+	},
 	"emeraldwalk.runonsave": {
 		"commands": [
 			{

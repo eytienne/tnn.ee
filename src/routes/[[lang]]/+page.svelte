@@ -2,6 +2,9 @@
 	import { onMount } from 'svelte';
 	import tnnee from '@@/tnnee-plain.svg?raw'
 	import { m } from '@/lib/paraglide/messages';
+	import { md } from '@/lib/utils';
+	import "./page.css";
+	import { PUBLIC_EMAIL_ADDRESS } from '$env/static/public';
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
@@ -15,9 +18,20 @@
 		const svg = title.firstElementChild as SVGSVGElement;
 		svgh = svg.clientHeight;
 	}
+
+	const titleHeight = "60vh";
+
+	const projectImgs = import.meta.glob<string>("../../lib/assets/projects/**/*.png", { query: "?url", import: "default", eager: true });
+	const projects = [
+		{
+			key: "3distinct",
+			img: projectImgs["../../lib/assets/projects/3distinct/desktop.png"],
+			demo: "https://eytienne.github.io/3Distinct-public/"
+		}
+	];
 </script>
 
-<header class="h-55/100 flex justify-center items-end">
+<header style:--title-height={titleHeight} class="h-(--title-height) w-full flex justify-center items-end">
 	<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
 		{@html tnnee}
 		{#if false}
@@ -27,9 +41,46 @@
 		{/if}
 	</div>
 </header>
-<main class="p-3 mt-16 text-2xl flex flex-col items-center">
-	<p>{m.about__title()}</p>
-</main>
+<div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-4xl">
+	<section class="mt-[2em] text-center">{m.about_title()}</section>
+	<section id="skills" class="mt-[calc(100vh-var(--title-height)-2em)] flex flex-col">
+		{@html md(m.about_skills())}
+	</section>
+	<section class="mt-36">
+		<h2 class="text-3xl font-bold">{m.projects_title()}</h2>
+		<div class="flex  mt-12 gap-4">
+			{#each projects as project}
+			<a target="_blank" href={project.demo} class="hover:[&_img]:duration-300 hover:[&_img]:transition-transform hover:[&_img]:scale-120 hover:[&_h3]:underline">
+				<div class="overflow-hidden rounded-sm">
+					<img src="{project.img}" alt="{project.key} preview">
+				</div>
+				<h3 class="font-semibold mt-2">{m[`${project.key}_title` as keyof typeof m]()}</h3>
+				<p>{m[`${project.key}_short_description` as keyof typeof m]()}</p>
+			</a>
+			{/each}
+		</div>
+	</section>
+	<section class="mt-36">
+		<h2 class="text-3xl font-bold">{m.contact_title()}</h2>
+		<p class="mt-2 text-xl">{m.contact_subtitle()}</p>
+		<div class="mt-4 grid 2xs:grid-cols-2 gap-y-4 gap-x-10 *:underline">
+			<a
+			class="justify-self-end text-right"
+			target="_blank"
+			rel="noreferrer"
+			href="https://wa.me/33769936080?text=I'm%20interested%20in%20your%20car%20for%20sale"
+			>
+			{m.contact_cta_whatsapp()}
+			</a>
+			<a
+			target="_blank"
+			rel="noreferrer"
+			href="mailto:{PUBLIC_EMAIL_ADDRESS}?subject={encodeURI(m.contact_email_subject())}">
+			{m.contact_cta_email()}
+			</a>
+		</div>
+	</section>
+</div>
 
 <style lang="scss">
 	header {
@@ -117,5 +168,4 @@
 			}
 		}
 	}
-
 </style>
