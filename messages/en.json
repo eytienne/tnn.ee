@@ -1,9 +1,9 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"3distinct_short_description": "My 3D project configurateur retro-engineered from Nike By You.",
+	"3distinct_short_description": "My 3D project configurator retro-engineered from Nike By You.",
 	"3distinct_title": "3Distinct",
 	"about_skills": "en/about_skills.md",
-	"about_title": "Hi there, I am Étienne — a software developer and KISS enjoyer.",
+	"about_title": "Hi there, I am Étienne — a software developer and {kiss} enjoyer.",
 	"contact_cta_email": "Send an email",
 	"contact_cta_whatsapp": "Message me on WhatsApp",
 	"contact_email_subject": "Pro request",

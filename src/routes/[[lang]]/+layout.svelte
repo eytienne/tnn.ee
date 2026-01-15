@@ -56,7 +56,7 @@
 	{@render children()}
 </main>
 <footer class="px-1 2xs:px-3 pt-24 pb-3 text-3xl hover:text-secondary-foreground w-full flex justify-center items-center gap-2">
-	<p class="text-base">made with 💦 by eytienne</p>
+	<p class="text-base text-center">made with 💦 by eytienne</p>
 	<a target="_blank" href="https://github.com/eytienne" title="GitHub profile">
 		<GitHub></GitHub>
 	</a>
