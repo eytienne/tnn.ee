@@ -96,6 +96,7 @@
 			{m.contact_cta_email()}
 			</a>
 		</div>
+		<p class="mt-8 text-lg">{@html m.contact_cta_resume({ link: `<a href="/${m.resume()}" class="underline">${m.resume()}</a>`})}</p>
 	</section>
 </div>
 
