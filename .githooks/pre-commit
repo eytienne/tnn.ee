@@ -15,12 +15,12 @@ if [[ ! -f "$GENERATED" ]]; then
 fi
 
 # Compare les dates de modif: si SOURCE est plus récent que GENERATED => OK
-if [[ "$SOURCE" -nt "$GENERATED" ]]; then
-  echo "✅ pre-push: OK ($SOURCE est plus récent que $GENERATED)"
+if [[ "$GENERATED" -nt "$SOURCE" ]]; then
+  echo "✅ pre-push: OK ($GENERATED est plus récent que $SOURCE)"
   exit 0
 fi
 
-echo "❌ pre-push: $GENERATED est plus récent (ou égal) à $SOURCE" >&2
+echo "❌ pre-push: $SOURCE est plus récent (ou égal) à $GENERATED" >&2
 echo "   → Tu as probablement oublié de régénérer $GENERATED depuis $SOURCE" >&2
 echo "   → Lance: npm run clean:svg" >&2
 exit 1
