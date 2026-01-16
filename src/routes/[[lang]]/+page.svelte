@@ -50,14 +50,16 @@
 </header>
 <div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-4xl">
 	<section class="mt-[2em] text-center">
-		{aboutTitle[0]}
 		<Popover.Root bind:open={kissOpen}>
-			<Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger>
+			{aboutTitle[0]}<!--
+				hack to avoid a whitespace
+			--><Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger><!--
+				hack to avoid a whitespace
+			-->{aboutTitle[1]}
 			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 bg-popover/96 font-medium" arrow={true} arrowClasses="bg-popover/96">
 				{m.about_kiss()}
 			</Popover.Content>
 		</Popover.Root>
-		{aboutTitle[1]}
 	</section>
 	<section id="skills" class="mt-[calc(100vh-var(--title-height)-2em)] flex flex-col">
 		{@html md(m.about_skills())}
@@ -97,7 +99,7 @@
 			{m.contact_cta_email()}
 			</a>
 		</div>
-		<p class="mt-8 text-lg">{@html m.contact_cta_resume({ link: `<a href="/${m.resume()}" class="underline">${m.resume()}</a>`})}</p>
+		<p class="mt-8 text-lg">{@html m.contact_cta_resume({ link: `<a href="/${m.resume()}" target="_blank" rel="noopener" class="underline">${m.resume()}</a>`})}</p>
 	</section>
 </div>
 
