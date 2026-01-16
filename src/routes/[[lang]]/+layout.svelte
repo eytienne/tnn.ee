@@ -10,9 +10,19 @@
 	import { m } from '@/lib/paraglide/messages';
 	import LinkedIn from '~icons/svg-icons/linkedin'
 	import GitHub from '~icons/svg-icons/github'
+	import { onMount } from 'svelte';
 
 	const tnnTitles = tnnMD.trim().split("\n").filter(line => !/<!--.*-->/.test(line));
-	const tnnTitle = tnnTitles.find(title => title.startsWith(">"))?.substring(1) ?? randomItem(tnnTitles);
+	let tnnTitle = $state<typeof tnnTitles[number]>();
+
+	function setTnnTitle() {
+		tnnTitle = tnnTitles.find(title => title.startsWith(">"))?.substring(1) ?? randomItem(tnnTitles);
+	}
+
+	setTnnTitle();
+	onMount(() => {
+		setTnnTitle(); // needed to get a random title on client side
+	});
 
 	let { children, params }: LayoutProps = $props();
 	const nonBaseLocale = locales.find(locale => locale !== baseLocale)!;

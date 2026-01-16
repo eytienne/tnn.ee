@@ -53,7 +53,7 @@
 		{aboutTitle[0]}
 		<Popover.Root bind:open={kissOpen}>
 			<Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger>
-			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 bg-popover/96 font-medium" arrow={true}>
+			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 bg-popover/96 font-medium" arrow={true} arrowClasses="bg-popover/96">
 				{m.about_kiss()}
 			</Popover.Content>
 		</Popover.Root>

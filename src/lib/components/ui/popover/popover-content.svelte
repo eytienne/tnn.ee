@@ -41,11 +41,11 @@
 				<div
 				style:--tw-shadow="4px 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 2px 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1))"
 					class={cn(
-						"bg-popover z-50 size-2.5 rotate-45 rounded-[2px] shadow-md",
-						"data-[side=top]:translate-x-1/2 data-[side=top]:translate-y-[calc(-50%_+_2px)]",
-						"data-[side=bottom]:-translate-x-1/2 data-[side=bottom]:-translate-y-[calc(-50%_+_1px)]",
-						"data-[side=right]:translate-x-[calc(50%_+_2px)] data-[side=right]:translate-y-1/2",
-						"data-[side=left]:-translate-y-[calc(50%_-_3px)]",
+						"bg-popover z-50 size-2.5 rotate-45 rounded-[2px] border-r border-b shadow-md",
+						"data-[side=top]:translate-x-1/2 data-[side=top]:translate-y-[calc(-50%_+_3.25px)]",
+						"data-[side=bottom]:-translate-x-1/2 data-[side=bottom]:-translate-y-[calc(-50%_+_2px)]",
+						"data-[side=right]:translate-x-[calc(50%_+_1.5px)] data-[side=right]:translate-y-1/2",
+						"data-[side=left]:translate-x-[0.5px] data-[side=left]:-translate-y-[calc(50%_-_3px)]",
 						arrowClasses
 					)}
 					{...props}
@@ -55,3 +55,9 @@
 		{/if}
 	</PopoverPrimitive.Content>
 </PopoverPortal>
+
+<style lang="scss">
+	:global([data-popover-arrow]) {
+		clip-path: polygon(0% 100%, 0% 90%, 90% 0%, 100% 0%, 100% 100%, 0% 100%);
+	}
+</style>
