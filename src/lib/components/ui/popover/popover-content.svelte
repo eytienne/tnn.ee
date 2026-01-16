@@ -3,15 +3,21 @@
 	import PopoverPortal from "./popover-portal.svelte";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 	import type { ComponentProps } from "svelte";
+	import type { ClassValue } from "svelte/elements";
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		sideOffset = 4,
 		align = "center",
+		children,
+		arrow = false,
+		arrowClasses,
 		portalProps,
 		...restProps
 	}: PopoverPrimitive.ContentProps & {
+		arrow?: boolean,
+		arrowClasses?: ClassValue | undefined | null;
 		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof PopoverPortal>>;
 	} = $props();
 </script>
@@ -27,5 +33,25 @@
 			className
 		)}
 		{...restProps}
-	/>
+		>
+		{@render children?.()}
+		{#if arrow}
+		<PopoverPrimitive.Arrow>
+			{#snippet child({ props })}
+				<div
+				style:--tw-shadow="4px 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 2px 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1))"
+					class={cn(
+						"bg-popover z-50 size-2.5 rotate-45 rounded-[2px] shadow-md",
+						"data-[side=top]:translate-x-1/2 data-[side=top]:translate-y-[calc(-50%_+_2px)]",
+						"data-[side=bottom]:-translate-x-1/2 data-[side=bottom]:-translate-y-[calc(-50%_+_1px)]",
+						"data-[side=right]:translate-x-[calc(50%_+_2px)] data-[side=right]:translate-y-1/2",
+						"data-[side=left]:-translate-y-[calc(50%_-_3px)]",
+						arrowClasses
+					)}
+					{...props}
+				></div>
+			{/snippet}
+		</PopoverPrimitive.Arrow>
+		{/if}
+	</PopoverPrimitive.Content>
 </PopoverPortal>

@@ -5,13 +5,15 @@
 	import { m } from '@/lib/paraglide/messages';
 	import { md } from '@/lib/utils';
 	import "./page.css";
-	import ThinCross from '~icons/svg-icons/thin-cross'
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
 
 	onMount(() => {
 		window.addEventListener("resize", svgResize);
+		window.addEventListener("scroll", (ev) => {
+			kissOpen = false;
+		});
 		svgResize();
 	});
 
@@ -24,6 +26,7 @@
 
 	const kiss = "___KISS__";
 	const aboutTitle = m.about_title({ kiss }).split(kiss, 2);
+	let kissOpen = $state(false);
 
 	const projectImgs = import.meta.glob<string>("../../lib/assets/projects/**/*.png", { query: "?url", import: "default", eager: true });
 	const projects = [
@@ -48,12 +51,10 @@
 <div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-4xl">
 	<section class="mt-[2em] text-center">
 		{aboutTitle[0]}
-		<Popover.Root>
-			<Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger
-			>
-			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 pr-5 bg-popover/96 font-medium">
+		<Popover.Root bind:open={kissOpen}>
+			<Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger>
+			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 bg-popover/96 font-medium" arrow={true}>
 				{m.about_kiss()}
-				<Popover.Close class="absolute top-0 -right-0.25 size-5 [&_svg]:h-full [&_svg]:w-full"><ThinCross/></Popover.Close>
 			</Popover.Content>
 		</Popover.Root>
 		{aboutTitle[1]}
