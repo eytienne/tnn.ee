@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import * as Popover from '@/lib/components/ui/popover';
 	import tnnee from '@@/tnnee-plain.svg?raw'
 	import { m } from '@/lib/paraglide/messages';
 	import { md } from '@/lib/utils';
 	import "./page.css";
+	import type { FadeParams, TransitionConfig } from 'svelte/transition';
+	import { cubicOut, quartOut } from 'svelte/easing';
+	import { Slider } from "$lib/components/ui/slider/index.js";
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
@@ -13,6 +16,10 @@
 		window.addEventListener("resize", svgResize);
 		window.addEventListener("scroll", (ev) => {
 			kissOpen = false;
+			if (chaosSettingOpen) {
+				showChaosSetting();
+			}
+			chaosSettingOpen = false;
 		});
 		svgResize();
 	});
@@ -27,6 +34,88 @@
 	const kiss = "___KISS__";
 	const aboutTitle = m.about_title({ kiss }).split(kiss, 2);
 	let kissOpen = $state(false);
+
+	type Particle = {
+		particleId: number;
+		angle: number;
+		rotate: number;
+		distance: number;
+		scale: number;
+	};
+	let particles = $state([] as Particle[]);
+	let particleId = -1;
+
+	const particleDuration = 1000;
+	const particleCount = 12;
+
+	let chaos = $state(50);
+	let chaosSettingOpen = $state(false);
+	let chaosSettingShow = $state(false);
+	const chaosSettingShowDuration = 3000;
+	let hideChaosSetting: NodeJS.Timeout|number;
+	function showChaosSetting() {
+		if (hideChaosSetting) {
+			clearTimeout(hideChaosSetting);
+		}
+		chaosSettingShow = true;
+		hideChaosSetting = setTimeout(function() {
+			chaosSettingShow = false;
+		}, chaosSettingShowDuration);
+	}
+
+	const _bias: Omit<Particle, 'particleId'> = {
+		angle: 20/180*Math.PI,
+		rotate: 50/180*Math.PI,
+		distance: 10,
+		scale: 0.5
+	};
+
+	function popParticles() {
+		showChaosSetting();
+		const newParticles = [] as Particle[];
+		for (let ii = 0; ii < particleCount; ii++) {
+			newParticles.push(biased({
+				particleId: ++particleId,
+				angle: ii * 2 * Math.PI / particleCount,
+				rotate: 45/180*Math.PI,
+				distance: 60 + ii%2 * 10,
+				scale: 1,
+			}));
+		}
+		particles.push(...newParticles);
+		tick().then(() => {
+			particles.splice(particles.findIndex(pp => pp.particleId === newParticles[0].particleId), particleCount);
+		});
+	}
+
+	function biased(particle: Particle) {
+		return {
+			...particle,
+			angle: bias(particle.angle, _bias.angle),
+			rotate: bias(particle.rotate, _bias.rotate),
+			distance: bias(particle.distance, _bias.distance),
+			scale: bias(particle.scale, _bias.scale)
+		} as Particle;
+	}
+	function bias(value: number, delta: number) {
+		const _biased = value + (Math.random() * 2 - 1) * chaos/100 * delta;
+		return Number.parseFloat(_biased.toPrecision(2)).valueOf();
+	}
+
+	type PopParams = Omit<FadeParams, 'easing'>& { particle: Particle; };
+	function pop(_node: HTMLSpanElement, { duration, delay, particle }: PopParams): TransitionConfig {
+		return {
+			duration,
+			delay,
+			css(t, u) {
+				const tt = quartOut(u);
+				return `
+					translate: calc(-50% + ${Math.cos(particle.angle)*particle.distance*tt}px) calc(25% + ${Math.sin(particle.angle)*particle.distance*tt}px);
+					opacity: ${cubicOut(t)};
+				`;
+			},
+		}
+	};
 
 	const projectImgs = import.meta.glob<string>("../../lib/assets/projects/**/*.png", { query: "?url", import: "default", eager: true });
 	const projects = [
@@ -49,15 +138,36 @@
 	</div>
 </header>
 <div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-4xl">
-	<section class="mt-[2em] text-center">
+	<section class="mt-[2em] text-center relative">
 		<Popover.Root bind:open={kissOpen}>
 			{aboutTitle[0]}<!--
 				hack to avoid a whitespace
-			--><Popover.Trigger openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline">KISS</Popover.Trigger><!--
+			--><Popover.Trigger onmouseenter={popParticles} onclick={popParticles} openOnHover={true} openDelay={100} closeDelay={100} class="cursor-pointer underline text-link relative">
+				KISS
+				{#each particles as particle(particle.particleId)}
+				<span
+					out:pop={{ duration: particleDuration, particle }}
+					style={`rotate: ${particle.rotate}rad; scale: ${particle.scale};`}
+					class="absolute -z-1 left-1/2 icon-[noto--kiss-mark] pointer-events-none"
+					></span>
+				{/each}
+			</Popover.Trigger><!--
 				hack to avoid a whitespace
 			-->{aboutTitle[1]}
-			<Popover.Content side="top" sideOffset={10} class="relative inline p-2 bg-popover/96 font-medium" arrow={true} arrowClasses="bg-popover/96">
+			<Popover.Content side="bottom" sideOffset={20} class="relative inline p-2 bg-popover/96 font-medium" arrow={true} arrowClasses="bg-popover/96">
 				{m.about_kiss()}
+			</Popover.Content>
+		</Popover.Root>
+		<Popover.Root bind:open={chaosSettingOpen}>
+			<Popover.Trigger onmousemove={() => showChaosSetting() } onclick={(e) => { if (!chaosSettingShow) { e.preventDefault(); }}} class="absolute -bottom-6 ml-2 p-1 size-8 opacity-88 hover:outline-2 rounded-md {chaosSettingShow || chaosSettingOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200">
+				<span class="icon-[ic--outline-settings] text-muted-foreground"></span>
+			</Popover.Trigger>
+			<Popover.Content onEscapeKeydown={() => showChaosSetting() } side="right" sideOffset={30} class="w-fit bg-popover/96 font-medium flex gap-2 py-5">
+				<Slider type="single" bind:value={chaos} min={0} max={100} step={1} orientation="vertical" class="data-[orientation=vertical]:w-4.5" thumbPositioning="exact"/>
+				<div class="flex flex-col justify-between">
+					<p>{m.about_kiss_chaos()}<br>{chaos} % {#if chaos === 100 }🔥{:else if chaos === 0}🥶{/if}</p>
+					<p>{@html m.about_kiss_inspired({ link: `<br><a class="text-link underline" target="_blank" rel="noreferrer" href="https://whimsy.joshwcomeau.com/">Whimsical Animations</a>`})}</p>
+				</div>
 			</Popover.Content>
 		</Popover.Root>
 	</section>

@@ -10,7 +10,6 @@ export function applyTheme(theme: Theme) {
 
 export function loadTheme(): Theme {
 	const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	console.log("defaultTheme", defaultTheme)
 	if (typeof window === "undefined") return defaultTheme;
 	const saved = localStorage.getItem(KEY);
 	return (themes as readonly string[]).includes(saved ?? '') ? (saved as Theme) : defaultTheme;

@@ -16,6 +16,8 @@
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
 		"@eslint/js": "^9.39.1",
+		"@iconify-json/ic": "^1.2.4",
+		"@iconify-json/noto": "^1.2.7",
 		"@iconify/tailwind4": "^1.2.0",
 		"@iconify/tools": "^5.0.2",
 		"@iconify/utils": "^3.1.0",

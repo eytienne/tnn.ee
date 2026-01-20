@@ -17,7 +17,7 @@ import {
 const SVG_ICONS = 'svg-icons';
 
 export default defineConfig({
-	server: { port: 4321 },
+	server: { port: 4321, host: '0.0.0.0' },
 
 	plugins: [
 		tailwindcss(),

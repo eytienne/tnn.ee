@@ -15,6 +15,7 @@
   --radius: 0.625rem;
   --background: var(--color-gray-100);
   --foreground: oklch(0.141 0.005 285.823);
+  --link: oklch(0.3411 0.2141 268.92);
   --card: var(--color-gray-50);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: var(--color-gray-50);
@@ -49,6 +50,7 @@
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
+  --link: oklch(0.7421 0.1223 265.95);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
@@ -87,6 +89,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-link: var(--link);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
