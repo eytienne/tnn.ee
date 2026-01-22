@@ -4,7 +4,7 @@
 	},
 	"[json]": {
 		"editor.wordWrap": "bounded",
-		"editor.wordWrapColumn": 90,
+		"editor.wordWrapColumn": 100,
 	},
 	"emeraldwalk.runonsave": {
 		"commands": [

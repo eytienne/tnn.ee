@@ -15,5 +15,8 @@
 	"contact_title": "Construisons quelque chose ensemble !",
 	"header__dark_mode": "Dark mode",
 	"projects_title": "J'ai travaillé sur...",
-	"resume": "cv_etienne_arabeyre.pdf"
+	"resume": "cv_etienne_arabeyre.pdf",
+	"unlatch_demo": "https://www.getunlatch.com/fr/",
+	"unlatch_short_description": "La solution de gestion pour les promoteurs immobiliers.",
+	"unlatch_title": "Unlatch"
 }

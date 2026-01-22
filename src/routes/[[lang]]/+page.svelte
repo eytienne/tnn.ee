@@ -12,17 +12,17 @@
 	let title: HTMLDivElement;
 	let svgh = $state(0);
 
+	function kissScroll() {
+		kissOpen = false;
+		if (chaosSettingOpen) {
+			showChaosSetting();
+		}
+		chaosSettingOpen = false;
+	};
+
 	onMount(() => {
-		window.addEventListener("resize", svgResize);
-		window.addEventListener("scroll", (ev) => {
-			kissOpen = false;
-			if (chaosSettingOpen) {
-				showChaosSetting();
-			}
-			chaosSettingOpen = false;
-		});
 		svgResize();
-	});
+	})
 
 	function svgResize() {
 		const svg = title.firstElementChild as SVGSVGElement;
@@ -123,10 +123,16 @@
 			key: "3distinct",
 			img: projectImgs["../../lib/assets/projects/3distinct/desktop.png"],
 			demo: "https://eytienne.github.io/3Distinct-public/"
+		},
+		{
+			key: "unlatch",
+			img: projectImgs["../../lib/assets/projects/unlatch/landing.png"],
+			demo: m.unlatch_demo()
 		}
 	];
 </script>
 
+<svelte:window onresize={svgResize} onscroll={kissScroll}/>
 <header style:--title-height={titleHeight} class="h-(--title-height) w-full flex justify-center items-end">
 	<div id="title" bind:this={title} class="flex flex-col justify-center items-center">
 		{@html tnnee}
@@ -137,7 +143,7 @@
 		{/if}
 	</div>
 </header>
-<div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-4xl">
+<div style:--title-height={titleHeight} class="px-3 sm:px-6 text-2xl w-full flex flex-col items-center *:w-full *:max-w-6xl">
 	<section class="mt-[2em] text-center relative">
 		<Popover.Root bind:open={kissOpen}>
 			{aboutTitle[0]}<!--
@@ -176,15 +182,15 @@
 	</section>
 	<section class="mt-32">
 		<h2 class="text-3xl font-bold">{m.projects_title()}</h2>
-		<div class="flex  mt-12 gap-4">
+		<div class="mt-20 grid md:grid-cols-2 gap-x-4 gap-y-8">
 			{#each projects as project}
-			<a target="_blank" href={project.demo} class="hover:[&_img]:duration-300 hover:[&_img]:transition-transform hover:[&_img]:scale-120 hover:[&_h3]:underline">
+			<a target="_blank" href={project.demo} class="row-span-2 grid grid-rows-subgrid gap-2 hover:[&_img]:duration-300 hover:[&_img]:transition-transform hover:[&_img]:scale-120 hover:[&_h3]:underline">
 				<div class="overflow-hidden rounded-sm shadow-md">
-					<img src="{project.img}" alt="{project.key} preview">
+					<img src="{project.img}" alt="{project.key} preview" class="object-cover h-full">
 				</div>
 				<div class="ps-2">
-					<h3 class="font-semibold mt-2">{m[`${project.key}_title` as "3distinct_title"]()}</h3>
-					<p>{m[`${project.key}_short_description` as "3distinct_short_description"]()}</p>
+					<h3 class="font-semibold">{m[`${project.key}_title` as "3distinct_title"]()}</h3>
+					<p class="text-xl">{m[`${project.key}_short_description` as "3distinct_short_description"]()}</p>
 				</div>
 			</a>
 			{/each}
