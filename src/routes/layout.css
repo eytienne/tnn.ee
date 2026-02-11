@@ -131,9 +131,16 @@
 	html, :host {
 		font-family: "Zalando Sans SemiExpanded", var(--default-font-family);
 	}
-	.zalando-sse {
-		font-family: "Zalando Sans SemiExpanded", sans-serif;
-		font-optical-sizing: auto;
-		font-style: normal;
+
+	.clickable-id {
+		@apply cursor-pointer;
+		&::before {
+			content: "#";
+			@apply text-muted-foreground absolute -left-0.5 opacity-0;
+		}
+
+		&:hover::before {
+			@apply opacity-100;
+		}
 	}
 }

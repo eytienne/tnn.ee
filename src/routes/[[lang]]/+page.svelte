@@ -8,6 +8,7 @@
 	import type { FadeParams, TransitionConfig } from 'svelte/transition';
 	import { cubicOut, quartOut } from 'svelte/easing';
 	import { Slider } from "$lib/components/ui/slider/index.js";
+	import { clickableId } from '@/lib/attachments';
 
 	let title: HTMLDivElement;
 	let svgh = $state(0);
@@ -187,7 +188,7 @@
 		{@html md(m.about_skills())}
 	</section>
 	<section class="mt-32">
-		<h2 class="text-3xl font-bold">{m.projects_title()}</h2>
+		<h2 id="projects" {@attach clickableId} class="text-3xl font-bold">{m.projects_title()}</h2>
 		<div class="mt-20 grid md:grid-cols-2 gap-x-4 gap-y-8">
 			{#each projects as project}
 			<a target="_blank" href={project.demo} class="row-span-2 grid grid-rows-subgrid gap-2 hover:[&_img]:duration-300 hover:[&_img]:transition-transform hover:[&_img]:scale-120 hover:[&_h3]:underline">
@@ -203,7 +204,7 @@
 		</div>
 	</section>
 	<section class="mt-32">
-		<h2 class="text-3xl font-bold">{m.contact_title()}</h2>
+		<h2 id="contact" {@attach clickableId} class="text-3xl font-bold">{m.contact_title()}</h2>
 		<p class="mt-2 text-xl">{m.contact_subtitle()}</p>
 		<div class="mt-4 grid 2xs:grid-cols-2 gap-y-4 gap-x-10 *:underline">
 			<a
