@@ -211,7 +211,7 @@
 			class="2xs:text-right"
 			target="_blank"
 			rel="noreferrer"
-			href="https://wa.me/33769936080?text=I'm%20interested%20in%20your%20car%20for%20sale"
+			href="https://wa.me/33769936080?text={encodeURI(m.contact_whatsapp_message())}"
 			>
 			{m.contact_cta_whatsapp()}
 			</a>
