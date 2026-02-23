@@ -13,15 +13,14 @@
 	import { onMount } from 'svelte';
 
 	const tnnTitles = tnnMD.trim().split("\n").filter(line => !/<!--.*-->/.test(line));
-	let tnnTitle = $state<typeof tnnTitles[number]>();
+	let tnnTitle = $state<typeof tnnTitles[number]>(getTnnTitle());
 
-	function setTnnTitle() {
-		tnnTitle = tnnTitles.find(title => title.startsWith(">"))?.substring(1) ?? randomItem(tnnTitles);
+	function getTnnTitle() {
+		return tnnTitles.find(title => title.startsWith(">"))?.substring(1) ?? randomItem(tnnTitles);
 	}
 
-	setTnnTitle();
 	onMount(() => {
-		setTnnTitle(); // needed to get a random title on client side
+		tnnTitle = getTnnTitle(); // needed to get a random title on client side
 	});
 
 	let { children, params }: LayoutProps = $props();
@@ -54,7 +53,7 @@
 	<h1 class="mr-auto self-start p-2 border-2 border-dashed" title="😆">{@html tnnTitle.replaceAll(/([A-Z]+)/g, `<span class="font-bold">$1</span>`)}</h1>
 	<div id="locale-switcher" class={switcherClasses}>
 		<Label class="text-md hidden sm:block" onclick={() => { checked = false; }}>{baseLocale.toUpperCase()}</Label>
-		<Switch bind:checked class={cn("dark:data-[state=unchecked]:bg-muted-foreground/60")} />
+		<Switch bind:checked class={cn("dark:data-[state=unchecked]:bg-muted-foreground/60")} aria-label={m.locale_switch_label()} />
 		<Label class="text-md" onclick={() => { checked = true; }}>{nonBaseLocale?.toUpperCase()}</Label>
 	</div>
 	<div id="theme-switcher" class={cn(switcherClasses, themeApplied ? '' : 'theme-not-applied')}>

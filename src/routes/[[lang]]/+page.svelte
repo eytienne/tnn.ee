@@ -172,7 +172,7 @@
 			</Popover.Content>
 		</Popover.Root>
 		<Popover.Root bind:open={chaosSettingOpen}>
-			<Popover.Trigger onmousemove={() => showChaosSetting() } onclick={(e) => { if (!chaosSettingShow) { e.preventDefault(); }}} class="absolute -bottom-6 ml-2 p-1 size-8 opacity-88 hover:outline-2 rounded-md {chaosSettingShow || chaosSettingOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200">
+			<Popover.Trigger aria-label={m.chaos_settings_button_label()} onmousemove={() => showChaosSetting() } onclick={(e) => { if (!chaosSettingShow) { e.preventDefault(); }}} class="absolute -bottom-6 ml-2 p-1 size-8 opacity-88 hover:outline-2 rounded-md {chaosSettingShow || chaosSettingOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-200">
 				<span class="icon-[ic--outline-settings] text-muted-foreground"></span>
 			</Popover.Trigger>
 			<Popover.Content onEscapeKeydown={() => showChaosSetting() } side="right" sideOffset={30} class="w-fit bg-popover/96 font-medium flex gap-2 py-5">
