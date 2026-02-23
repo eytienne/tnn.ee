@@ -130,6 +130,7 @@
 	}
 	html, :host {
 		font-family: "Zalando Sans SemiExpanded", var(--default-font-family);
+		scroll-behavior: smooth;
 	}
 
 	.clickable-id {

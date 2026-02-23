@@ -284,7 +284,7 @@
 							transform: translateX(22px);
 						}
 						.letter-dot0 {
-							transform: translate(-59.25px, -20px) scale(0.94, 0.68);
+							transform: translate(-54px, -20px) scale(0.9, 0.68);
 						}
 						.letter-eaccute0 {
 							opacity: 1;
