@@ -121,15 +121,15 @@
 	const projectImgs = import.meta.glob<string>("../../lib/assets/projects/**/*.png", { query: "?url", import: "default", eager: true });
 	const projects = [
 		{
+			key: "3distinct",
+			img: projectImgs["../../lib/assets/projects/3distinct/desktop.png"],
+			demo: "https://eytienne.github.io/3Distinct-public/"
+		},
+		{
 			key: "peel-js",
 			img: projectImgs["../../lib/assets/projects/peel-js/docs.png"],
 			demo: "https://eytienne.github.io/peel-js/"
 
-		},
-		{
-			key: "3distinct",
-			img: projectImgs["../../lib/assets/projects/3distinct/desktop.png"],
-			demo: "https://eytienne.github.io/3Distinct-public/"
 		},
 		{
 			key: "unlatch",
